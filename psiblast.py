@@ -21,29 +21,25 @@ def _read_pssm(pssm_dir):
     return pssm_table.as_matrix()
 
 
-def pssm(sequence):
+def pssm(sequence=None, filename=None):
     pssm_dir = tempfile.mkdtemp(prefix='pssm_psiblast__')
 
-    with open(os.path.join(pssm_dir, 'tmp.fasta'), 'w') as fasta_file:
-        fasta_file.write('>Seq\n')
-        fasta_file.write(sequence)
+    if sequence is not None:
+        filename = os.path.join(pssm_dir, 'tmp.fasta')
+        with open(filename, 'w') as fasta_file:
+            fasta_file.write('>Seq\n')
+            fasta_file.write(sequence)
+            filename = os.path.join(pssm_dir, 'tmp.fasta')
 
     subprocess.check_call([
         'psiblast',
-        '-db',
-        'blastdb/pdbseqres',
-        '-evalue',
-        '0.01',
-        '-query',
-        pssm_dir + '/tmp.fasta',
-        '-out_ascii_pssm',
-        pssm_dir + '/pssm.txt',
-        '-num_iterations',
-        '3',
-        '-out',
-        'output.txt',
-        '-comp_based_stats',
-        '0',
+        '-db', 'blastdb/pdbseqres',
+        '-evalue', '0.01',
+        '-query', filename,
+        '-out_ascii_pssm', pssm_dir + '/pssm.txt',
+        '-num_iterations', '3',
+        '-out', 'output.txt',
+        '-comp_based_stats', '0',
     ])
     pssm = _read_pssm(pssm_dir)
 
