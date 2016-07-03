@@ -1,5 +1,9 @@
 # User added
 *.swp
+blastdb/
+pdb/
+libs/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
