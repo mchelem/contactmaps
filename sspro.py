@@ -9,13 +9,11 @@ class Prediction:
     """
     Hold information regarding predictions
     """
-    sequence = None
     secondary_structure = None
     solvent_accessibility = None
 
     def __repr__(self):
-        return "{}\n{}\n{}\n".format(
-            self.sequence,
+        return "{}\n{}\n".format(
             self.secondary_structure,
             self.solvent_accessibility
         )
@@ -23,7 +21,6 @@ class Prediction:
 
 def _read_prediction(sequence, prediction_dir):
     prediction = Prediction()
-    prediction.sequence = sequence
 
     with open(os.path.join(prediction_dir, 'tmp.pred.ss')) as ss8:
         for line in ss8:
