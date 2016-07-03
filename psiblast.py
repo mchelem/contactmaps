@@ -1,3 +1,4 @@
+import multiprocessing
 import os
 import shutil
 import subprocess
@@ -40,6 +41,7 @@ def pssm(sequence=None, filename=None):
         '-num_iterations', '3',
         '-out', 'output.txt',
         '-comp_based_stats', '0',
+        '-num_threads', str(multiprocessing.cpu_count()),
     ])
     pssm = _read_pssm(pssm_dir)
 
